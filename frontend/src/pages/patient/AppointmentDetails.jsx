@@ -32,6 +32,18 @@ export default function AppointmentDetails() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  useEffect(() => {
+    const ws = new WebSocket(`ws://localhost:8000/api/chat/ws/${id}`);
+    ws.onmessage = (event) => {
+      const newMsg = JSON.parse(event.data);
+      setMessages((prev) => {
+        if (prev.find(m => m.id === newMsg.id)) return prev;
+        return [...prev, newMsg];
+      });
+    };
+    return () => ws.close();
+  }, [id]);
+
   const handleSendMessage = async () => {
     if (!message.trim()) return;
     const newMsg = {
