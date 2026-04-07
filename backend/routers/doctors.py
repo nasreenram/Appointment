@@ -42,7 +42,7 @@ async def get_doctors(
     location: str = Query(None, description="Search by clinic address/city"),
     db=Depends(get_db),
 ):
-    query: dict = {"role": "DOCTOR"} # We should ensure we are grabbing only doctors
+    query: dict = {"role": {"$in": ["doctor", "DOCTOR"]}} # Support existing lowercase and legacy uppercase records
     if mode and mode.lower() != "any":
         query["mode"] = mode.upper()
     if specialty and specialty.lower() != "any":
