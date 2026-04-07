@@ -151,8 +151,10 @@ export default function DoctorAppointmentDetails() {
                   <h4 className="text-lg font-bold text-white mb-1 tracking-tight">Video Call Waiting Room</h4>
                   <p className="text-gray-400 text-[13px] mb-6 font-medium">Your patient will join here</p>
                   
-                  <button className="w-full max-w-[280px] bg-[#2563EB] hover:bg-[#1D4ED8] hover:shadow-lg hover:-translate-y-0.5 text-white py-3 rounded-[12px] font-bold text-[14px] flex items-center justify-center transition-all duration-200">
-                    <Play className="w-4 h-4 mr-2 fill-current" /> Initialize Video Call
+                  <button 
+                    onClick={() => window.open(appointment.linkOrAddress || 'https://meet.google.com/new', '_blank')}
+                    className="w-full max-w-[280px] bg-[#2563EB] hover:bg-[#1D4ED8] hover:shadow-lg hover:-translate-y-0.5 text-white py-3 rounded-[12px] font-bold text-[14px] flex items-center justify-center transition-all duration-200">
+                    <Video className="w-4 h-4 mr-2" /> Start Google Meet
                   </button>
                   <p className="text-gray-500 text-sm mt-5 mb-2">Link is active 5 minutes before appointment time</p>
                 </div>
@@ -163,7 +165,7 @@ export default function DoctorAppointmentDetails() {
                   </div>
                   <h4 className="text-lg font-bold text-[#1E3A8A] mb-2">Clinic Address</h4>
                   <p className="text-[#3B82F6] text-[14px] font-medium max-w-sm mb-6 leading-relaxed">
-                    456 Medical Plaza, Suite 200<br/>Downtown Hub, NY 10001
+                    {appointment.linkOrAddress || '456 Medical Plaza, Suite 200, Downtown Hub, NY 10001'}
                   </p>
                 </div>
               )}
