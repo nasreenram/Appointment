@@ -70,6 +70,42 @@ async def get_schedule(
     available_only: bool = Query(False),
     db=Depends(get_db),
 ):
+    try:
+        doctor_oid = ObjectId(doctor_id)
+    except Exception:
+        raise HTTPException(400, "Invalid doctor ID")
+
+    if date:
+        initialized = await db.schedule_initialized.find_one({
+            "doctorId": doctor_id,
+            "date": date
+        })
+        
+        if not initialized:
+            doctor = await db.doctors.find_one({"_id": doctor_oid})
+            if doctor:
+                slots = generate_slots("09:00", "17:00", 30, date)
+                if slots:
+                    docs = [
+                        {
+                            "doctorId": doctor_id,
+                            "doctorName": doctor.get("name", "Unknown"),
+                            "specialty": doctor.get("specialty", "Unknown"),
+                            "date": date,
+                            "timeSlot": slot,
+                            "bookedFlag": False,
+                            "createdAt": datetime.utcnow(),
+                        }
+                        for slot in slots
+                    ]
+                    await db.doctor_schedules.insert_many(docs)
+                    
+                await db.schedule_initialized.insert_one({
+                    "doctorId": doctor_id,
+                    "date": date,
+                    "createdAt": datetime.utcnow()
+                })
+
     query: dict = {"doctorId": doctor_id}
     if date:
         query["date"] = date
