@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../api/axios';
-import { Calendar as CalendarIcon, Activity, Pill, Video, Clock } from 'lucide-react';
+import { Calendar as CalendarIcon, Activity, Pill, Video, Clock, ClipboardList } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function PatientDashboard() {

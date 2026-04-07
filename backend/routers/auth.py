@@ -96,7 +96,7 @@ async def login(data: LoginRequest, db=Depends(get_db)):
         "admin": db.admins,
     }
     collection = collection_map.get(data.role)
-    if not collection:
+    if collection is None:
         raise HTTPException(400, "Invalid role. Use patient, doctor, or admin")
 
     user = await collection.find_one({"email": data.email})
