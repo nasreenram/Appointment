@@ -2,8 +2,8 @@ from fastapi import APIRouter, HTTPException
 from typing import List
 from datetime import datetime
 from bson import ObjectId
-from ..database import get_db
-from ..schemas import ReviewCreate, ReviewResponse
+from database import get_db
+from schemas import ReviewCreate, ReviewResponse
 
 router = APIRouter(prefix="/api/reviews", tags=["Reviews"])
 

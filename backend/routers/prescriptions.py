@@ -2,8 +2,8 @@ from fastapi import APIRouter, HTTPException, Depends
 from typing import List
 from datetime import datetime
 from bson import ObjectId
-from ..database import get_db
-from ..schemas import PrescriptionCreate, PrescriptionResponse
+from database import get_db
+from schemas import PrescriptionCreate, PrescriptionResponse
 
 router = APIRouter(prefix="/api/prescriptions", tags=["Prescriptions"])
 
