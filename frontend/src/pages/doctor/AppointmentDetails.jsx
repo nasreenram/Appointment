@@ -54,7 +54,10 @@ export default function DoctorAppointmentDetails() {
     };
     try {
       const res = await api.post('/api/chat', newMsg);
-      setMessages((prev) => [...prev, res.data.data]);
+      setMessages((prev) => {
+        if (prev.find(m => m.id === res.data.data.id)) return prev;
+        return [...prev, res.data.data];
+      });
       setMessage('');
     } catch (e) {
       console.error('Failed to send', e);
