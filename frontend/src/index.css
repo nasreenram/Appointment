@@ -1,6 +1,6 @@
-@import "tailwindcss";
-@source "../index.html";
-@source "../src";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @theme {
   --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
